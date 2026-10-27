@@ -1,0 +1,79 @@
+Let's run a simple `.txt` file using Docker on your Linux laptop.
+
+## Step 1: Create a folder
+
+```
+mkdir docker-text
+cd docker-text
+```
+
+## Step 2: Create `message.txt`
+
+```
+nano message.txt
+```
+
+Type:
+
+```
+Hello from Docker!
+This is my first text file inside a Docker container.
+```
+
+Save with `Ctrl + O`, press `Enter`, then `Ctrl + X`.
+
+## Step 3: Create a `Dockerfile`
+
+```
+nano Dockerfile
+```
+
+Paste:
+
+```
+FROM alpine:latest
+
+WORKDIR /app
+
+COPY message.txt .
+
+CMD ["cat", "message.txt"]
+```
+
+Save and exit.
+
+## Step 4: Build the image
+
+```
+sudo docker build -t my-text-app .
+```
+
+## Step 5: Run the container
+
+```
+sudo docker run --name text-container my-text-app
+```
+
+Expected output:
+
+```
+Hello from Docker!
+This is my first text file inside a Docker container.
+```
+
+## Step 6: Understand what happened
+
+- `FROM alpine:latest` — uses a lightweight Linux environment.
+- `WORKDIR /app` — sets the working directory.
+- `COPY message.txt .` — copies the text file into the image.
+- `CMD ["cat", "message.txt"]` — displays the file's contents when the container runs.
+
+Folder structure:
+
+```
+docker-text/
+├── message.txt
+└── Dockerfile
+```
+
+Unlike the Node.js server, this container runs a command, prints the text, and exits. That's normal.
